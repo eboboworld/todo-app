@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 
-class App extends Component  { 
+function createTask(title) {
+  return {
+    id: Date.now(),
+    title: title,
+  };
+
+}
+class App extends Component  {  
   state = {
     inputValue: "",
     tasks: []
   }
+
 
   inputChange = (e) => {
     this.setState({
@@ -14,7 +22,7 @@ class App extends Component  {
 
   buttonSubmit = (e) => {
     this.setState({
-      tasks: [this.state.inputValue, ...this.state.tasks],
+      tasks: [ createTask(this.state.inputValue), ...this.state.tasks ],
       inputValue:"",
     });
   };
@@ -24,6 +32,7 @@ class App extends Component  {
   render(){ 
     const {tasks} = this.state
 
+
     return (
       <div>
         <h1>ToDo Task</h1>
@@ -31,8 +40,8 @@ class App extends Component  {
         <input placeholder="Enter task..." value={this.state.inputValue} onChange={this.inputChange} />
         <button onClick={this.buttonSubmit}>Add</button>
         <ul>
-          {this.state.tasks.map((tasks, index) => (
-            <li key={index}>{tasks}</li>
+          {this.state.tasks.map((task, index) => (
+            <li key={task.id}>{task.title}</li>
             ))}
         </ul>
       </div>
