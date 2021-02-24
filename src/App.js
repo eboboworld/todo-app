@@ -18,13 +18,16 @@ class App extends Component  {
       inputValue:"",
     });
   };
+  
 
  
   render(){ 
+    const {tasks} = this.state
 
     return (
       <div>
         <h1>ToDo Task</h1>
+        <h2>Active tasks: {tasks.length}</h2>
         <input placeholder="Enter task..." value={this.state.inputValue} onChange={this.inputChange} />
         <button onClick={this.buttonSubmit}>Add</button>
         <ul>
