@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
 
+
 function createTask(title) {
   return {
     id: Date.now(),
     title: title,
+    done: false,
   };
 
 }
 class App extends Component  {  
   state = {
     inputValue: "",
-    tasks: []
+    tasks: [] 
   }
 
+  handleTaskChange = (task, isdone) => {
+    const newTasks = this.state.tasks.map(function(t) {
+      if (t===task) {
+        return {
+          ...task, 
+          done: isdone
+        }
+      }
+      return t;
+    })
+    this.setState({
+      tasks: newTasks
+    });
+    }
 
   inputChange = (e) => {
     this.setState({
@@ -26,12 +42,11 @@ class App extends Component  {
       inputValue:"",
     });
   };
-  
+
 
  
   render(){ 
-    const {tasks} = this.state
-
+    const {tasks} = this.state;    
 
     return (
       <div>
@@ -39,9 +54,14 @@ class App extends Component  {
         <h2>Active tasks: {tasks.length}</h2>
         <input placeholder="Enter task..." value={this.state.inputValue} onChange={this.inputChange} />
         <button onClick={this.buttonSubmit}>Add</button>
-        <ul>
-          {this.state.tasks.map((task, index) => (
-            <li key={task.id}>{task.title}</li>
+        <ul >
+          {this.state.tasks.map((task) => (
+            <li key={task.id}>
+              <div>
+              <input type="checkbox" checked={task.done} onChange={e => this.handleTaskChange(task, !task.done)}/>
+              {task.title}
+            </div>
+            </li>
             ))}
         </ul>
       </div>
